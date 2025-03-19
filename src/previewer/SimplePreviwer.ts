@@ -11,8 +11,9 @@ export default class SimplePreviwer implements IPreviewer {
     }
   }
 
-  constructor(path: string) {
-    const file = fs.openSync(path, 'a');
+  constructor(templatePath: string, outputPath: string) {
+    return;
+    const file = fs.openSync(templatePath, 'a');
     const buffer = Buffer.alloc(1024);
     let position = 0;
     const found = false;

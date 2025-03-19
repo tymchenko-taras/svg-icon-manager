@@ -1,4 +1,5 @@
 import ParseError from '../error/ParseError';
+import { JSONSvgViewBox } from '../type/json';
 
 export default class SvgViewBoxProcessor {
   /**
@@ -6,7 +7,11 @@ export default class SvgViewBoxProcessor {
    * 0 0 24 24 => 24
    * 0 0 24 48 => [24, 48]
    */
-  public static encode(viewBox: string): number[] | number {
+  public static encode(viewBox: string): JSONSvgViewBox {
+    if (!viewBox) {
+      throw new ParseError(`Unable to parse viewBox "${viewBox}"`);
+    }
+
     const result = viewBox.split(' ').map(coord => parseInt(coord));
     if (!Array.isArray(result)) {
       throw new ParseError(`Unable to parse viewBox "${viewBox}"`);
@@ -32,7 +37,7 @@ export default class SvgViewBoxProcessor {
    * 24 => 0 0 24 24
    * [24, 24] => 0 0 24 24
    */
-  public static decode(viewBox: number[] | number): string {
+  public static decode(viewBox: JSONSvgViewBox): string {
     let result = '';
     if (!viewBox) {
       return result;
